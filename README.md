@@ -1,40 +1,42 @@
 # RecyclerViewPlugin
-support: addmore refresh +rxJava+MVP(weakRefrenceVersion)
-作者亲情奉献 在网上找了好多recylerview loadMore相关的例子 总会遇到这样那样的问题 后来总结了一些大神的开源项目（鸿洋、肖芳等）
-在这里集成了一个例子。
-先说一下使用：
-1.mvp 请借鉴我上一个MVP Demo的例子，里面有模板。
-2.rxJava 主要应用于异步加载数据。
-3.refresh 我在项目里用了秋百万那个Framelayout 在示例中用google自带的SwipeRefreshLayout代替。
-4.说到我们的重点插件了：recyclerPlugin。
-a.插件可以使用简单的语句完成头部以及LoadMore的布局初始化。
-        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        idRecyclerView.setLayoutManager(manager);
-        /** 添加代码 创建Header*/
-        plugin.createHeader(R.layout.headview);
-        /** 添加代码 创建加载更多视图*/
-        plugin.createAddMore(false, null);
-        /**
-         * 设置没有更多数据时的展示布局
-         */
-        plugin.setNoMoreView(R.layout.nomore_loading);
-       idRecyclerView.setAdapter(plugin.getLastAdapter());
-
+support: addmore refresh +rxJava+MVP(weakRefrenceVersion)  
+作者亲情奉献 在网上找了好多recylerview loadMore相关的例子 总会遇到这样那样的问题 后来总结了一些大神的开源项目（鸿洋、肖芳等）  
+在这里集成了一个例子。  
+先说一下使用：  
+1.mvp 请借鉴我上一个MVP Demo的例子，里面有模板。  
+2.rxJava 主要应用于异步加载数据。  
+3.refresh 我在项目里用了秋百万那个Framelayout 在示例中用google自带的SwipeRefreshLayout代替。  
+4.说到我们的重点插件了：recyclerPlugin。  
+a.插件可以使用简单的语句完成头部以及LoadMore的布局初始化。  
+`
+        LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);  
+        idRecyclerView.setLayoutManager(manager);  
+        /** 添加代码 创建Header*/  
+        plugin.createHeader(R.layout.headview);  
+        /** 添加代码 创建加载更多视图*/  
+        plugin.createAddMore(false, null);  
+        /**  
+         * 设置没有更多数据时的展示布局  
+         */  
+        plugin.setNoMoreView(R.layout.nomore_loading);  
+       idRecyclerView.setAdapter(plugin.getLastAdapter());  
+`
 b.我们每次请求数据有三种情况：1.页面容量<请求总数 2.页面容量=请求数 3.页面容量<每次请求数
-根据不同的数量 控制loadMore不同的布局 如下代码：
-    @Override
-    public void changeLoadMoreByCount(int maxCount, int requestCount) {
-        if (maxCount < DetailPresenter.REQUEST_COUNT) {
-            plugin.setAddMoreVisible(false);
-        } else if (requestCount == DetailPresenter.REQUEST_COUNT) {
-            plugin.setAddMoreVisible(true, this, R.layout.default_loading);
-            plugin.setHasMoreData(true);
-        } else if (requestCount < DetailPresenter.REQUEST_COUNT) {
-            plugin.setAddMoreVisible(true, null, R.layout.nomore_loading);
-            plugin.loadMoreAdapter.setOnLoadMoreListener(null);
-            plugin.setHasMoreData(false);
-        }
-    }
+根据不同的数量 控制loadMore不同的布局 如下代码：  
+  `  @Override  
+    public void changeLoadMoreByCount(int maxCount, int requestCount) {  
+        if (maxCount < DetailPresenter.REQUEST_COUNT) {  
+            plugin.setAddMoreVisible(false);  
+        } else if (requestCount == DetailPresenter.REQUEST_COUNT) {  
+            plugin.setAddMoreVisible(true, this, R.layout.default_loading);  
+            plugin.setHasMoreData(true);  
+        } else if (requestCount < DetailPresenter.REQUEST_COUNT) {  
+            plugin.setAddMoreVisible(true, null, R.layout.nomore_loading);  
+            plugin.loadMoreAdapter.setOnLoadMoreListener(null);  
+            plugin.setHasMoreData(false);  
+        }  
+    }  
+    `
     c.请求进行时 没多说的Rx  记住请求完了调用 RecyclerPlugin.setIsRequesting(false); 要不然不能进行下一次请求
      public void addmore() {
         Observable.create(new Observable.OnSubscribe<Integer>() {
