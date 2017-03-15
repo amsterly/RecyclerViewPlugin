@@ -1,12 +1,12 @@
 # RecyclerViewPlugin
 support: addmore refresh +rxJava+MVP(weakRefrenceVersion)  
-作者亲情奉献 在网上找了好多recylerview loadMore相关的例子 总会遇到这样那样的问题 后来总结了一些大神的开源项目（鸿洋、肖芳等） 
+作者亲情奉献 在网上找了好多recylerview loadMore相关的例子 总会遇到这样那样的问题 后来总结了一些大神的开源项目
 在这里集成了一个例子。  
-##先说一下使用：  
-###1.mvp 请借鉴我上一个MVP Demo的例子，里面有模板。  
-###2.rxJava 主要应用于异步加载数据。  
-###3.refresh 我在项目里用了秋百万那个Framelayout 在示例中用google自带的SwipeRefreshLayout代替。  
-###4.说到我们的重点插件了：recyclerPlugin。  
+## 先说一下使用：  
+### 1.mvp 请借鉴我上一个MVP Demo的例子，里面有模板。  
+### 2.rxJava 主要应用于异步加载数据。  
+### 3.refresh 我在项目里用了秋百万那个Framelayout 在示例中用google自带的SwipeRefreshLayout代替。  
+### 4.说到我们的重点插件了：recyclerPlugin。  
 a.插件可以使用简单的语句完成头部以及LoadMore的布局初始化。  
 <pre class=”brush: java; gutter: true;”>
   LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);  
